@@ -9,6 +9,6 @@ package com.citi.card;
  */
 public class Card {
     public static double loadMoney(double i) {
-        return 0;
+        return 10;
     }
 }
