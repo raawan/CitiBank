@@ -14,14 +14,15 @@ public class CardTest {
     @Test
     public void GIVEN_ZeroBalance_THEN_OnLoading10PoundsCreditBalanceIs10Pound() {
 
-        double balance = Card.loadMoney(10);
+        Card card = new Card(0);
+        double balance = card.loadMoney(10);
         assert balance == 10.00;
     }
 
     @Test
     public void GIVEN_5Balance_THEN_OnLoading10PoundsCreditBalanceIs10Pound() {
-
-        double balance = Card.loadMoney(10);
+        Card card = new Card(5);
+        double balance = card.loadMoney(10);
         assert balance == 15.00;
     }
 
