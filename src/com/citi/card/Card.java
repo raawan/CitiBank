@@ -1,5 +1,7 @@
 package com.citi.card;
 
+import java.math.BigDecimal;
+
 /**
  * == electronic pre-paid cash card ==
  *
@@ -9,13 +11,23 @@ package com.citi.card;
  */
 public class Card {
 
-    private double balance ;
+    /*
+    Assuming negative balances are not allowed
+     */
+    private BigDecimal balance ;
 
-    Card(double balance) {
+    Card() {
+        this(new BigDecimal("0"));
+    }
+
+    Card(BigDecimal balance) {
+        if(balance.compareTo(new BigDecimal("0"))<0) {
+            throw new NegativeBalanceNotAllowed();
+        }
         this.balance= balance;
     }
 
-    public double loadMoney(double amount) {
-        return balance+amount;
+    public BigDecimal loadMoney(BigDecimal amount) {
+        return this.balance.add(amount);
     }
 }
