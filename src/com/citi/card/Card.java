@@ -29,6 +29,11 @@ public class Card {
     }
 
     public BigDecimal loadMoney(BigDecimal amount) {
-        return this.balance.add(amount);
+
+        BigDecimal result =  this.balance.add(amount);
+        if(result.compareTo(ZERO_VALUE)<0) {
+            throw new NegativeBalanceNotAllowed();
+        }
+        return result;
     }
 }

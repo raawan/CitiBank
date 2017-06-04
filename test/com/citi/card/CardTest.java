@@ -43,6 +43,14 @@ public class CardTest {
         assertThrows(NegativeBalanceNotAllowed.class, () -> {
             Card card = new Card(new BigDecimal("-10"));
         });
+    }
+
+    @Test
+    public void GIVEN_5Balance_THEN_OnLoadingNegative10Pounds_NegativeBalanceExceptionThrown() {
+        Card card = new Card(new BigDecimal("5"));
+        assertThrows(NegativeBalanceNotAllowed.class, () -> {
+            BigDecimal balance = card.loadMoney(new BigDecimal("-10"));
+        });
 
     }
 }
