@@ -78,11 +78,12 @@ public class CardTest {
     }
 
     @Test
-    public void GIVEN_MultipleSimultaneousDebits_THEN_correctFunctionality() throws Exception {
-        Card card = new Card(new BigDecimal("20001"));
-        final int numberOfThreads = 20;
-        final int debitPerThread = 1000;
-        final BigDecimal debitValue = new BigDecimal("1");
+    public void GIVEN_20001PoundBalance_WHEN_SimultaneousDebitsFrom20Retailers1000DebitEachOf1Pound_THEN_BalanceShouldBe1Pound()
+            throws Exception {
+        Card card = new Card(new BigDecimal("20002"));
+        final int numberOfThreads = 20; //total retailers
+        final int debitPerThread = 1000; // 1000 debits at each retailer
+        final BigDecimal debitValue = new BigDecimal("1"); // each debit is of one pound
 
         CyclicBarrier entryBarrier = new CyclicBarrier(numberOfThreads + 1);
         CyclicBarrier exitBarrier = new CyclicBarrier(numberOfThreads + 1);
@@ -100,9 +101,9 @@ public class CardTest {
             new SynchedThread(runnable, entryBarrier, exitBarrier).start();
         }
 
-        assertEquals(new BigDecimal("20001"), card.getBalance());
+        assertEquals(new BigDecimal("20002"), card.getBalance());
         entryBarrier.await();
         exitBarrier.await();
-        assertEquals(new BigDecimal("1"), card.getBalance());
+        assertEquals(new BigDecimal("2"), card.getBalance());
     }
 }
