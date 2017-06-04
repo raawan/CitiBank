@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * == electronic pre-paid cash card ==
- *
+ * <p>
  * Loading money onto the card.
- · Spending credit balances from the card.
- · Using the card simultaneously at multiple retailers.
+ * · Spending credit balances from the card.
+ * · Using the card simultaneously at multiple retailers.
  */
 public class CardTest {
 
@@ -73,7 +73,7 @@ public class CardTest {
     public void GIVEN_5PoundBalanceAnd7PoundsToDebit_THEN_NegativeBalanceExceptionThrown() {
         Card card = new Card(new BigDecimal("5"));
         assertThrows(NegativeBalanceNotAllowed.class, () -> {
-           card.debit(new BigDecimal("7"));
+            card.debit(new BigDecimal("7"));
         });
     }
 
@@ -84,25 +84,25 @@ public class CardTest {
         final int debitPerThread = 1000;
         final BigDecimal debitValue = new BigDecimal("1");
 
-        CyclicBarrier entryBarrier = new CyclicBarrier(numberOfThreads+1);
-        CyclicBarrier exitBarrier = new CyclicBarrier(numberOfThreads+1);
+        CyclicBarrier entryBarrier = new CyclicBarrier(numberOfThreads + 1);
+        CyclicBarrier exitBarrier = new CyclicBarrier(numberOfThreads + 1);
 
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                for (int i=0;i<debitPerThread;i++) {
+                for (int i = 0; i < debitPerThread; i++) {
                     card.debit(debitValue);
                 }
             }
         };
 
-        for(int i=0;i<numberOfThreads;i++) {
-            new SynchedThread(runnable,entryBarrier,exitBarrier).start();
+        for (int i = 0; i < numberOfThreads; i++) {
+            new SynchedThread(runnable, entryBarrier, exitBarrier).start();
         }
 
-        assertEquals(new BigDecimal("20001"),card.getBalance());
+        assertEquals(new BigDecimal("20001"), card.getBalance());
         entryBarrier.await();
         exitBarrier.await();
-        assertEquals(new BigDecimal("1"),card.getBalance());
+        assertEquals(new BigDecimal("1"), card.getBalance());
     }
 }

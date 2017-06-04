@@ -6,12 +6,27 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * == electronic pre-paid cash card ==
- *
+ * <p>
  * Loading money onto the card.
- · Spending credit balances from the card.
- · Using the card simultaneously at multiple retailers.
+ * · Spending credit balances from the card.
+ * · Using the card simultaneously at multiple retailers.
  */
-public class Card {
+public final class Card {
+
+    /*
+        Assuming negative balances are not allowed
+    */
+    private BigDecimal balance;
+    private static final BigDecimal ZERO_VALUE = new BigDecimal("0");
+    private final Lock lock = new ReentrantLock();
+
+    Card() {
+        this(ZERO_VALUE);
+    }
+
+    Card(BigDecimal balance) {
+        setBalance(balance);
+    }
 
     public BigDecimal getBalance() {
         return balance;
@@ -20,21 +35,6 @@ public class Card {
     private void setBalance(BigDecimal balance) {
         checkNegativeBalance(balance);
         this.balance = balance;
-    }
-
-    /*
-            Assuming negative balances are not allowed
-             */
-    private BigDecimal balance ;
-    private static BigDecimal ZERO_VALUE = new BigDecimal("0");
-    private Lock lock = new ReentrantLock();
-
-    Card() {
-        this(ZERO_VALUE);
-    }
-
-    Card(BigDecimal balance) {
-        setBalance(balance);
     }
 
     public void loadMoney(BigDecimal amount) {
@@ -50,7 +50,7 @@ public class Card {
     }
 
     private void checkNegativeBalance(BigDecimal result) {
-        if(result.compareTo(ZERO_VALUE)<0) {
+        if (result.compareTo(ZERO_VALUE) < 0) {
             throw new NegativeBalanceNotAllowed();
         }
     }
