@@ -38,6 +38,10 @@ public class Card {
     }
 
     public BigDecimal debit(BigDecimal amount) {
-        return balance.subtract(amount);
+        BigDecimal result =  this.balance.subtract(amount);
+        if(result.compareTo(ZERO_VALUE)<0) {
+            throw new NegativeBalanceNotAllowed();
+        }
+        return result;
     }
 }
