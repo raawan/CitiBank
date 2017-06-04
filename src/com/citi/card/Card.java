@@ -11,9 +11,18 @@ import java.math.BigDecimal;
  */
 public class Card {
 
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    private void setBalance(BigDecimal balance) {
+        checkNegativeBalance(balance);
+        this.balance = balance;
+    }
+
     /*
-    Assuming negative balances are not allowed
-     */
+            Assuming negative balances are not allowed
+             */
     private BigDecimal balance ;
     private static BigDecimal ZERO_VALUE = new BigDecimal("0");
 
@@ -22,26 +31,20 @@ public class Card {
     }
 
     Card(BigDecimal balance) {
-        if(balance.compareTo(ZERO_VALUE)<0) {
-            throw new NegativeBalanceNotAllowed();
-        }
-        this.balance= balance;
+        setBalance(balance);
     }
 
-    public BigDecimal loadMoney(BigDecimal amount) {
+    public void loadMoney(BigDecimal amount) {
+        setBalance(this.balance.add(amount));
+    }
 
-        BigDecimal result =  this.balance.add(amount);
+    public void debit(BigDecimal amount) {
+        setBalance(this.balance.subtract(amount));
+    }
+
+    private void checkNegativeBalance(BigDecimal result) {
         if(result.compareTo(ZERO_VALUE)<0) {
             throw new NegativeBalanceNotAllowed();
         }
-        return result;
-    }
-
-    public BigDecimal debit(BigDecimal amount) {
-        BigDecimal result =  this.balance.subtract(amount);
-        if(result.compareTo(ZERO_VALUE)<0) {
-            throw new NegativeBalanceNotAllowed();
-        }
-        return result;
     }
 }
