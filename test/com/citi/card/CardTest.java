@@ -18,4 +18,11 @@ public class CardTest {
         assert balance == 10.00;
     }
 
+    @Test
+    public void GIVEN_5Balance_THEN_OnLoading10PoundsCreditBalanceIs10Pound() {
+
+        double balance = Card.loadMoney(10);
+        assert balance == 15.00;
+    }
+
 }
