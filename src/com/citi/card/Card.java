@@ -1,6 +1,8 @@
 package com.citi.card;
 
 import java.math.BigDecimal;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * == electronic pre-paid cash card ==
@@ -25,6 +27,7 @@ public class Card {
              */
     private BigDecimal balance ;
     private static BigDecimal ZERO_VALUE = new BigDecimal("0");
+    private Lock lock = new ReentrantLock();
 
     Card() {
         this(ZERO_VALUE);
@@ -35,11 +38,15 @@ public class Card {
     }
 
     public void loadMoney(BigDecimal amount) {
+        lock.lock();
         setBalance(this.balance.add(amount));
+        lock.unlock();
     }
 
     public void debit(BigDecimal amount) {
+        lock.lock();
         setBalance(this.balance.subtract(amount));
+        lock.unlock();
     }
 
     private void checkNegativeBalance(BigDecimal result) {
