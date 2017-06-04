@@ -38,7 +38,7 @@ public class CardTest {
     }
 
     @Test
-    public void NoNegativeBaalnceCardIsAllowed() {
+    public void NoNegativeBalnceCardIsAllowed() {
 
         assertThrows(NegativeBalanceNotAllowed.class, () -> {
             Card card = new Card(new BigDecimal("-10"));

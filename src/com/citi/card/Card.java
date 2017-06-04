@@ -15,13 +15,14 @@ public class Card {
     Assuming negative balances are not allowed
      */
     private BigDecimal balance ;
+    private static BigDecimal ZERO_VALUE = new BigDecimal("0");
 
     Card() {
-        this(new BigDecimal("0"));
+        this(ZERO_VALUE);
     }
 
     Card(BigDecimal balance) {
-        if(balance.compareTo(new BigDecimal("0"))<0) {
+        if(balance.compareTo(ZERO_VALUE)<0) {
             throw new NegativeBalanceNotAllowed();
         }
         this.balance= balance;
