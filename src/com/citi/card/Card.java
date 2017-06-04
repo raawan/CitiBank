@@ -8,4 +8,7 @@ package com.citi.card;
  · Using the card simultaneously at multiple retailers.
  */
 public class Card {
+    public static double loadMoney(double i) {
+        return 0;
+    }
 }
