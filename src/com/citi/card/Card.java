@@ -36,4 +36,9 @@ public class Card {
         }
         return result;
     }
+
+
+    public BigDecimal debit(BigDecimal bigDecimal) {
+        return null;
+    }
 }

@@ -51,6 +51,12 @@ public class CardTest {
         assertThrows(NegativeBalanceNotAllowed.class, () -> {
             BigDecimal balance = card.loadMoney(new BigDecimal("-10"));
         });
+    }
 
+    @Test
+    public void GIVEN_20PoundBalanceAnd5PoundsToDebit_THEN_BalanceShouldBe15Pounds() {
+        Card card = new Card(new BigDecimal("20"));
+        BigDecimal balance = card.debit(new BigDecimal("5"));
+        assert balance.equals(new BigDecimal("15"));
     }
 }
