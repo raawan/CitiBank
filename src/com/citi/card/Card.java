@@ -37,8 +37,7 @@ public class Card {
         return result;
     }
 
-
-    public BigDecimal debit(BigDecimal bigDecimal) {
-        return null;
+    public BigDecimal debit(BigDecimal amount) {
+        return balance.subtract(amount);
     }
 }

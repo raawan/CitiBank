@@ -59,4 +59,11 @@ public class CardTest {
         BigDecimal balance = card.debit(new BigDecimal("5"));
         assert balance.equals(new BigDecimal("15"));
     }
+
+    @Test
+    public void GIVEN_20Pound70PenceBalanceAnd5Pounds90PenceToDebit_THEN_BalanceShouldBe14Pounds80pence() {
+        Card card = new Card(new BigDecimal("20.70"));
+        BigDecimal balance = card.debit(new BigDecimal("5.90"));
+        assert balance.equals(new BigDecimal("14.80"));
+    }
 }
